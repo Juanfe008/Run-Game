@@ -1,5 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://c8iu56o7goy5l"]
+[gd_scene load_steps=25 format=3 uid="uid://c8iu56o7goy5l"]
 
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_gknrj"]
 [ext_resource type="Texture2D" uid="uid://c525jycvvecyd" path="res://assets/img/mort.png" id="1_ku7qi"]
 [ext_resource type="AudioStream" uid="uid://dscpg6m666dta" path="res://assets/sound/jump.wav" id="2_x4n6y"]
 
@@ -159,13 +160,16 @@ size = Vector2(10, 16)
 size = Vector2(10, 14)
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 scale = Vector2(8, 8)
+script = ExtResource("1_gknrj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_ncpha")
-animation = &"duck"
+animation = &"idle"
+frame_progress = 0.560356
 
 [node name="RunningCol" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 0)
