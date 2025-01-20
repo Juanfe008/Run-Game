@@ -77,7 +77,7 @@ func _process(delta: float) -> void:
 			$HUD.get_node("StartLabel").hide()
 
 func generate_obs():
-	#generate ground obstacles
+	# Generate ground obstacles
 	if obstacles.is_empty() or last_obs.position.x < score + randi_range(300, 500):
 		var obs_type = obstacle_types[randi() % obstacle_types.size()]
 		var obs
@@ -90,6 +90,14 @@ func generate_obs():
 			var obs_y : int = screen_size.y - ground_height - (obs_height * obs_scale.y /2) + 5
 			last_obs = obs
 			add_obs(obs, obs_x, obs_y)
+		# Random chance to spawn a bird
+		if difficulty == MAX_DIFFICULTY:
+			if (randi() % 2) == 0:
+				# Generate bird obstacles
+				obs = bird_scene.instantiate()
+				var obs_x: int = screen_size.x + score + 100
+				var obs_y: int = bird_heights[randi() % bird_heights.size()]
+				add_obs(obs, obs_x, obs_y)
 
 func add_obs(obs, x, y):
 		obs.position = Vector2i(x, y)
