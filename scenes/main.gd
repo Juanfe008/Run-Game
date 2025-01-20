@@ -71,6 +71,11 @@ func _process(delta: float) -> void:
 		# Update ground position
 		if $Camera2D.position.x - $Ground.position.x > screen_size.x * 1.5:
 			$Ground.position.x += screen_size.x
+			
+		# Remove obstacles that have gone off screen
+		for obs in obstacles:
+			if obs.position.x < ($Camera2D.position.x - screen_size.x):
+				remove_obs(obs)
 	else:
 		if Input.is_action_pressed("ui_accept"):
 			game_running = true
@@ -103,7 +108,11 @@ func add_obs(obs, x, y):
 		obs.position = Vector2i(x, y)
 		add_child(obs)
 		obstacles.append(obs)
-	
+
+func remove_obs(obs):
+	obs.queue_free()
+	obstacles.erase(obs)
+
 func show_score():
 	$HUD.get_node("ScoreLabel").text = "SCORE: " + str(score / SCORE_MODIFIER) 
 
