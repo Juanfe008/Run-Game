@@ -30,6 +30,7 @@ var last_obs
 func _ready() -> void:
 	screen_size = get_window().size
 	ground_height = $Ground.get_node("Sprite2D").texture.get_height()
+	$GameOver.get_node("Button").pressed.connect(new_game)
 	new_game()
 
 func new_game() -> void:
@@ -37,6 +38,7 @@ func new_game() -> void:
 	score = 0
 	show_score()
 	game_running = false
+	get_tree().paused = false
 	difficulty = 0
 	
 	# Reset the nodes
@@ -45,8 +47,9 @@ func new_game() -> void:
 	$Camera2D.position = CAM_START_POS
 	$Ground.position = Vector2i(0, 0)
 	
-	# Reset HUD
+	# Reset HUD and game over screen
 	$HUD.get_node("StartLabel").show()
+	$GameOver.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -129,3 +132,4 @@ func adjust_difficulty():
 func game_over():
 	get_tree().paused = true
 	game_running = false
+	$GameOver.show()
